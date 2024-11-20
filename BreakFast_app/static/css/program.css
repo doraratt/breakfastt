@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/waist.png');
+    background-size: contain;
+    background-position: 1000px center;
+    background-repeat: no-repeat;
+    background-color: #F3A9A8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    list-style-type: none;
+    padding: 0 20px; /* Add padding for spacing */
+}
+
+header nav ul li {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #964b4b;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #964b4b;
+    font-size: 1.2em;
+}
+
+header nav ul li:first-child {
+    margin-right: auto; /* Push "Break Fast" to the far left */
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8em;
+}
+
+header nav ul li input[type="text"] {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 2px solid #f7d3d3;
+}
+
+main {
+    flex: 1; /* Take up all available space between header and footer */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* Highlight the active Tracker link */
+.active-link {
+    background-color: #F3A9A8;  /* Highlight color */
+    color: white;  /* Change text color for contrast */
+    font-weight: bold;  /* Make the font bold */
+    padding: 10px 5px;  /* Add padding for a button-like effect */
+    border-radius: 5px;  /* Rounded corners for a smoother look */
+}
+
+header nav ul li a.active-link {
+    text-decoration: none; /* Remove underline */
+}
+
+
+.program-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ensures 3 equal-width columns */
+    gap: 1.5rem; /* Space between the program cards */
+    padding: 2rem 0;
+    width: 90%;
+    max-width: 1200px; /* Optional: limit the max-width to prevent stretching */
+    margin: 0 auto; /* Centers the grid container */
+}
+
+.program-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Stack the content vertically */
+    justify-content: space-between; /* Ensure content is spaced out */
+    height: 100%; /* Ensure the card takes up full height */
+    align-items: center;
+}
+
+.program-card img {
+    max-width: 280px; /* Control the image size */
+    width: 100%; /* Make sure the image scales responsively */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 1rem; /* Add space below the image */
+    object-fit: contain; /* Ensure the image fits inside the container without distortion */
+}
+
+.program-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.program-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.program-card .btn {
+    background-color: #ffb6c1;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.program-card .btn:hover {
+    background-color: #e89aa0;
+}
+
+.program-card .info-link {
+    position: absolute;
+    bottom: 1rem; /* Place the link at the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center the link */
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+}
+
+.program-card .info-link:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #964b4b;
+    margin-top: 20px;
+    width: 100%;
+}

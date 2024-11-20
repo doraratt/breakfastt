@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BreakFast | Program</title>
+  <link rel="stylesheet" href="{% static 'css/program.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/png" href="{% static 'images/bficon.png' %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}" class="logo">Break Fast</a></li>
+        <li><a href="{% url 'tracker' %}">Tracker</a></li>
+        <li><a href="{% url 'plan' %}">Plan</a></li>
+        <li><a href="{% url 'program' %}" class="active-link">Program</a></li>
+        <li><a href="{% url 'me' %}">Me</a></li>
+        <li><input type="text" placeholder="Search"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="program-container">
+      <!-- Beginner Program -->
+      <div class="program-card">
+        <img src="{% static 'images/beginner.png' %}" alt="Beginner">
+        <h3>BEGINNER</h3>
+        <p>Step-by-step guides for people new to intermittent fasting, with gradual increase in fasting periods.</p>
+        <button class="btn">View Guide</button>
+        <a href="#" class="info-link">See Info</a>
+      </div>
+
+      <!-- Advanced Program -->
+      <div class="program-card">
+        <img src="{% static 'images/advanced.png' %}" alt="Advanced">
+        <h3>ADVANCED</h3>
+        <p>Programs for experienced fasters, including extended fasting and more complex protocols.</p>
+        <button class="btn">View Guide</button>
+        <a href="#" class="info-link">See Info</a>
+      </div>
+
+      <!-- Challenger Program -->
+      <div class="program-card">
+        <img src="{% static 'images/challenger.png' %}" alt="Challenger">
+        <h3>CHALLENGER</h3>
+        <p>Offers periodic challenges, such as a 30-day fasting challenge, with rewards to motivate involvement.</p>
+        <button class="btn">View Guide</button>
+        <a href="#" class="info-link">See Info</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Break Fast</p>
+  </footer>
+</body>
+</html>

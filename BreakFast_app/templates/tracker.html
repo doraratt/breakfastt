@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BreakFast | Tracker</title>
+  <link rel="stylesheet" href="{% static 'css/tracker.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/png" href="{% static 'images/bficon.png' %}">
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}" class="logo">Break Fast</a></li>
+        <li><a href="{% url 'tracker' %}" class="active-link">Tracker</a></li>
+        <li><a href="{% url 'plan' %}">Plan</a></li>
+        <li><a href="{% url 'program' %}">Program</a></li>
+        <li><a href="{% url 'me' %}">Me</a></li>
+        <li><input type="text" placeholder="Search"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="tracker-container">
+      <!-- Fasting Plan Section -->
+      <section class="card fasting-plan">
+        <h2>FASTING PLAN</h2>
+        <p>Your current plan is:</p>
+        {% if fasting_days and eating_days %}
+            {% if fasting_days == 5 and eating_days == 2 %}
+                <!-- 5:2 fasting plan (days) -->
+                <div class="plan-details">
+                    <span class="days-fasting">{{ fasting_days }} <br> Days <br> Fasting</span>
+                    <span class="divider">:</span>
+                    <span class="days-eating">{{ eating_days }} <br> Days <br> Eating Window</span>
+                </div>
+            {% else %}
+                <!-- Other fasting plans (hours) -->
+                <div class="plan-details">
+                    <span class="hours-fasting">{{ fasting_hours }} <br> Hours <br> Fasting</span>
+                    <span class="divider">:</span>
+                    <span class="hours-eating">{{ eating_hours }} <br> Hours <br> Eating Window</span>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>No fasting plan selected yet. Please choose one.</p>
+        {% endif %}
+        <a href="{% url 'plan' %}" class="button">Edit Plan</a>
+      </section>
+      
+    <!-- Other sections remain unchanged -->
+    <section class="card fast-time-record">
+      <h2>FAST TIME RECORD</h2>
+      <p>05:16:08</p>
+      <p>Remaining until your next eating window! Getting there...</p>
+      <div class="buttons">
+        <button>Pause</button>
+        <button>Stop</button>
+      </div>
+    </section>
+
+    <section class="card physiological-stat">
+      <h2>PHYSIOLOGICAL STAT</h2>
+      <p>How are you feeling today?</p>
+      <div class="emojis">
+        <span>😔</span>
+        <span>😐</span>
+        <span>😊</span>
+      </div>
+      <p>How energetic are you today?</p>
+      <div class="energy-level">
+        <span>🔴</span>
+        <span>🟠</span>
+        <span>🟡</span>
+        <span>🟢</span>
+      </div>
+    </section>
+
+    <section class="card sleep-cycle">
+      <h2>SLEEP CYCLE</h2>
+      <p>How long did you sleep today?</p>
+      <p>05:16</p>
+      <p>It is crucial to track your sleep cycle to see how it affects your fasting results!</p>
+    </section>
+  </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Break Fast</p>
+  </footer>
+</body>
+</html>

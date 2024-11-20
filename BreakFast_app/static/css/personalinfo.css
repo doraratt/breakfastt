@@ -1,0 +1,214 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #F3A9A8;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 70%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 1;
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar h2 {
+    font-size: 25px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;  /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 0;
+    font-size: 16px;
+    color: #444;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li.active {
+    background-color: #F3A9A8;
+    color: #fff;
+}
+
+.sidebar ul li:hover {
+    background-color: #F3A9A8;  /* No hover color change */
+    color: inherit;  /* Keep original text color */
+}
+
+.sidebar ul li a {
+    text-decoration: none;  /* Removes underline */
+    color: inherit;  /* Inherit the color of the list item */
+}
+
+/* Sidebar hover effect for "Account Information" */
+.sidebar li.account-info-item {
+    transition: background-color 0.3s ease;
+}
+
+.sidebar li.account-info-item:hover {
+    background-color: transparent; /* No hover color change */
+    color: inherit;  /* Keep original text color */
+}
+
+/* Main Content */
+.main-content {
+    flex: 3;
+    padding: 30px;
+}
+
+.main-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-pic:hover {
+    border-color: #ff6f61;
+}
+
+.placeholder-icon {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+.profile label {
+    cursor: pointer;
+}
+
+/* Form */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.delete {
+    background-color: transparent;
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+}
+
+button.delete:hover {
+    background-color: #ff7f7f;
+    color: #fff;
+}
+
+button.update {
+    background-color: #fbd5d5;
+    color: #ff4d4d;
+}
+
+button.update:hover {
+    background-color: #ff7f7f;
+    color: #fff;
+}
+
+/* Sidebar hover effect for "Personal Information" */
+.sidebar ul li.active {
+    background-color: #F3A9A8;
+    color: #fff;
+}
+
+.sidebar ul li.active:hover {
+    background-color: #F3A9A8; /* No hover color change */
+    cursor: pointer;
+    color: inherit;
+}
+/* Sidebar Back Button */
+.back-button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #444;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.back-button i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.back-button:hover {
+    color: #ff6f61; /* Change color on hover */
+}

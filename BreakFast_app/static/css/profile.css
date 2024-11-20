@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F3A9A8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background-color: #F3A9A8;
+    padding: 20px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    list-style-type: none;
+    padding: 0 20px; /* Add padding for spacing */
+}
+
+header nav ul li {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #964b4b;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #964b4b;
+    font-size: 1.2em;
+}
+
+header nav ul li:first-child {
+    margin-right: auto; /* Push "Break Fast" to the far left */
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8em;
+}
+
+header nav ul li input[type="text"] {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 2px solid #f7d3d3;
+}
+
+main {
+    flex: 1; /* Take up all available space between header and footer */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* Highlight the active Tracker link */
+.active-link {
+    background-color: #F3A9A8;  /* Highlight color */
+    color: white;  /* Change text color for contrast */
+    font-weight: bold;  /* Make the font bold */
+    padding: 10px 5px;  /* Add padding for a button-like effect */
+    border-radius: 5px;  /* Rounded corners for a smoother look */
+}
+
+header nav ul li a.active-link {
+    text-decoration: none; /* Remove underline */
+}
+
+
+form {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px; /* Increase padding for a larger appearance */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem; /* Increase font size for better readability */
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px; /* Space between label and input */
+    font-weight: bold;
+    font-size: 1rem; /* Increase label font size */
+}
+
+form input, 
+form select {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 25px; /* Increase space between fields */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #ff6f91;
+    color: white;
+    font-size: 1.2rem; /* Increase button text size */
+    border: none;
+    border-radius: 5px;
+    padding: 15px 25px; /* Larger button size */
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px; /* Add space between button and form fields */
+}
+
+button:hover {
+    background-color: #e8576d;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: -300px; /*move to the left*/
+    margin-top: -100px;
+    height: 100vh;
+}
+
+.form-container {
+    flex: 1;
+    max-width: 700px; /* Set a larger max width */
+    width: 80%; /* Make it take up 80% of the screen width */
+    padding: 20px; /* Increase padding for spacing */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-image {
+    position: absolute; /* Position the image absolutely */
+    right: 1000px; /* moves image to the left */
+    top: 50%;
+    transform: translateY(-50%); /* Adjust for perfect centering */
+}
+
+.user-image img {
+    width: 800px; /* Enlarge the image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Make the image circular */
+}

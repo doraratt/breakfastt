@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BreakFast | Me</title>
+  <link rel="stylesheet" href="{% static 'css/me.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/png" href="{% static 'images/bficon.png' %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}" class="logo">BreakFast</a></li>
+        <li><a href="{% url 'tracker' %}">Tracker</a></li>
+        <li><a href="{% url 'plan' %}">Plan</a></li>
+        <li><a href="{% url 'program' %}">Program</a></li>
+        <li><a href="{% url 'me' %}" class="active-link">Me</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="me-page">
+        <div class="greeting-container">
+            <div class="greeting">
+                <h1>Hello, <span>Athena</span></h1>
+              </div>
+        </div>
+      
+      <div class="calendar">
+        <h2>October</h2>
+        <div class="calendar-days">
+          <div>Mon<br>8</div>
+          <div>Tue<br>9</div>
+          <div>Wed<br>10</div>
+          <div class="active-day">Thu<br>11</div>
+            <div>Fri<br>12</div>
+            <div>Sat<br>13</div>
+            <div>Sun<br>14</div>
+        </div>
+      </div>
+
+      <div class="fasting-info">
+        <p>You are fasting today for</p>
+        <h1>3 hours</h1>
+        <div class="progress-circle">
+          <div class="progress-text">75%<br>Complete</div>
+        </div>
+        <button class="details-btn">Details</button>
+      </div>
+
+      <div class="user-image">
+        <img src="{% static 'images/ategurl_nbg.png' %}" alt="User Fasting">
+      </div>
+    </section>
+  </main>
+
+  <div class="settings-icon">
+    <a href="{% url 'personalinfo' %}">
+      <i class="fas fa-cog"></i> <!-- Font Awesome settings icon -->
+    </a>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Break Fast</p>
+  </footer>
+</body>
+</html>

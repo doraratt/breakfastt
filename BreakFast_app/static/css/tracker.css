@@ -1,0 +1,267 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/healthyfood.png');
+    background-size: cover;
+    background-position: 300px center;
+    background-repeat: no-repeat;
+    background-color: #F3A9A8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    list-style-type: none;
+    padding: 0 20px; /* Add padding for spacing */
+}
+
+header nav ul li {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #964b4b;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #964b4b;
+    font-size: 1.2em;
+}
+
+header nav ul li:first-child {
+    margin-right: auto; /* Push "Break Fast" to the far left */
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8em;
+}
+
+header nav ul li input[type="text"] {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 2px solid #f7d3d3;
+}
+
+main {
+    flex: 1; /* Take up all available space between header and footer */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    display: inline-block;
+    background-color: #ff6f91;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.button:hover {
+    background-color: #e8576d;
+}
+
+.tracker-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Create 2 columns */
+    gap: 30px; /* Space between the grid items */
+    margin-top: 30px;
+    width: 100%; /* Ensure the grid takes full width */
+    max-width: 1200px; /* Limit the width for a centered layout */
+    padding: 0 20px; /* Add padding around the grid */
+    margin-left: auto;
+    margin-right: auto; /* Center the grid horizontally */
+}
+
+/* Individual Cards */
+.card {
+    background-color: #fff; /* White background for cards */
+    border-radius: 12px; /* Rounded corners */
+    padding: 40px; /* Add more padding inside the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center align text */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: space-between; /* Distribute content evenly */
+    height: 350px; /* Increase height of each card */
+    font-size: 1.2em; /* Adjust font size for readability */
+}
+
+.card .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    margin-top: auto; /* Push buttons to the bottom if needed */
+}
+
+
+/* Fasting Plan Section */
+.fasting-plan h2 {
+    font-size: 1.5em;
+    color: #d81b60;
+    margin-bottom: 10px;
+}
+
+.fasting-plan p {
+    font-size: 1em;
+    margin: 10px 0;
+    color: black;
+}
+
+.fasting-plan .plan-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.fasting-plan .days-fasting,
+.fasting-plan .days-eating {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.fasting-plan .divider {
+    font-size: 2em;
+    margin: 0 10px;
+    color: #d81b60;
+}
+
+.fasting-plan button {
+    background-color: #F3A9A8;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.fasting-plan button:hover {
+    background-color: #b0154a;
+}
+
+/* Fast Time Record Section */
+.fast-time-record h2 {
+    font-size: 1.5em;
+    color: #d81b60;
+    margin-bottom: 10px;
+}
+
+.fast-time-record p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: black;
+    margin: 10px 0;
+}
+
+.fast-time-record .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.fast-time-record .buttons button {
+    background-color: #F3A9A8;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.fast-time-record .buttons button:hover {
+    background-color: #b0154a;
+}
+
+/* Physiological Stat Section */
+.physiological-stat h2 {
+    font-size: 1.5em;
+    color: #d81b60;
+    margin-bottom: 10px;
+}
+
+.physiological-stat p {
+    font-size: 1em;
+    color: black;
+    margin: 10px 0;
+}
+
+.physiological-stat .emojis,
+.physiological-stat .energy-level {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.physiological-stat span {
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.physiological-stat span:hover {
+    transform: scale(1.2);
+}
+
+/* Sleep Cycle Section */
+.sleep-cycle h2 {
+    font-size: 1.5em;
+    color: #d81b60;
+    margin-bottom: 10px;
+}
+
+.sleep-cycle p {
+    font-size: 1.3em;
+    color: black;
+    margin: 10px 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #fff;
+    padding: 5px;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1em;
+    color: #964b4b;
+    flex-shrink: 0;
+}
+
+/* Highlight the active Tracker link */
+.active-link {
+    background-color: #F3A9A8;  /* Highlight color */
+    color: white;  /* Change text color for contrast */
+    font-weight: bold;  /* Make the font bold */
+    padding: 10px 5px;  /* Add padding for a button-like effect */
+    border-radius: 5px;  /* Rounded corners for a smoother look */
+}
+
+header nav ul li a.active-link {
+    text-decoration: none; /* Remove underline */
+}

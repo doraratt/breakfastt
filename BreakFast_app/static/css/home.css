@@ -1,0 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/healthyfood.png');
+    background-size: cover;
+    background-position: 300px center;
+    background-repeat: no-repeat;
+    background-color: #F3A9A8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    list-style-type: none;
+    padding: 0 20px; /* Add padding for spacing */
+}
+
+header nav ul li {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #964b4b;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #964b4b;
+    font-size: 1.2em;
+}
+
+header nav ul li:first-child {
+    margin-right: auto; /* Push "Break Fast" to the far left */
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8em;
+}
+
+header nav ul li input[type="text"] {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 2px solid #f7d3d3;
+}
+
+main {
+    flex: 1; /* Take up all available space between header and footer */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the content */
+    align-items: flex-start; /* Align the content to the left */
+    text-align: left; /* Align text to the left */
+    padding: 40px 20px;
+    background-color: #fff;
+    margin: 20px 0;
+    width: 50%; /* Adjust the width as needed */
+    max-width: 800px;
+    position: absolute; /* Position it absolutely */
+    left: 50px; /* Align it to the left side of the page */
+    height: 82vh; /* Make it full height of the page */
+    border-radius: 12px;
+    bottom: 35px;
+}
+
+.hero h1 {
+    font-size: 5em;
+    font-weight: bold;
+    color: #000;
+}
+
+.hero p {
+    font-size: 1.2em;
+    color: #555;
+    margin: 15px 0;
+}
+
+.hero button {
+    padding: 10px 20px;
+    background-color: #f7d3d3;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.fsched {
+    background-color: #fff; /* White background */
+    border-radius: 12px; /* Rounded corners */
+    padding: 20px; /* Padding inside the section */
+    text-align: center; /* Center text horizontally */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+    width: 100%; /* Full width of the section */
+    max-width: 100px; /* Maximum width */
+    height: 215px;
+    
+    /* Positioning the section vertically at the bottom */
+    position: absolute;
+    bottom: 60px; /* Adjust to move section higher or lower */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%) rotate(180deg); /* Correct the horizontal centering */
+    
+    /* Make the text vertical */
+    display: flex;
+    flex-direction: column; /* Stack the child elements vertically */
+    align-items: center; /* Center the child elements horizontally */
+    gap: 15px; /* Optional space between child elements */
+    writing-mode: vertical-rl; /* Align text vertically */
+    margin: 0; /* Remove default margins */
+    
+}
+
+.features {
+    display: grid; /* Use CSS Grid */
+    grid-template-columns: repeat(2, 1fr); /* Create 2 equal-width columns */
+    grid-template-rows: auto; /* Adjust row height automatically */
+    gap: 20px; /* Space between items */
+    max-width: 600px; /* Optional: Limit the width of the grid */
+    margin: 50px auto; /* Center the grid and add top margin */
+    padding: 20px; /* Add padding inside the grid container */
+    background-color: #f9f9f9; /* Optional: Light background for the section */
+    border-radius: 12px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+    position: relative;
+    top: 280px;
+    left: 200px;
+    right: 100px;
+}
+
+.feature {
+    background-color: #fff; /* White background for each feature box */
+    border-radius: 12px; /* Rounded corners for each feature box */
+    padding: 20px; /* Add padding inside the feature box */
+    text-align: center; /* Center the text inside the feature box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+}
+
+.feature h2 {
+    font-size: 2em; /* Adjust font size for the heading */
+    color: #964b4b; /* Set the color for the heading */
+}
+
+.feature p {
+    font-size: 1.2em; /* Set font size for the paragraph */
+    color: #555; /* Set color for the paragraph */
+}
+
+.mission-text {
+    position: absolute; /* Position it absolutely */
+    bottom: 63px; /* Distance from the bottom of the page */
+    right: 20px; /* Distance from the right of the page */
+    background-color: #fff; /* Optional: White background */
+    padding: 20px; /* Add some padding inside */
+    border-radius: 12px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+    max-width: 550px; /* Optional: Set a max width for the box */
+}
+
+.mission-text p {
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.rating i {
+    color: #ffbb33;
+    margin: 0 4px;
+}
+
+footer {
+    text-align: center;
+    background-color: #fff;
+    padding: 5px;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1em;
+    color: #964b4b;
+    flex-shrink: 0;
+}
+
+.social-media-container {
+    position: absolute; /* Position the container in the upper-right corner */
+    top: 100px; /* Adjust the distance from the top */
+    right: 20px; /* Adjust the distance from the right */
+    background-color: #fff; /* White background */
+    padding: 10px; /* Add some padding inside the container */
+    border-radius: 8px; /* Optional: Rounded corners */
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.social-media {
+    display: flex; /* Align the icons horizontally */
+    gap: 15px; /* Space out the icons */
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-media a {
+    font-size: 2em; /* Adjust the size of the icons */
+    color: #333; /* Set the icon color */
+    text-decoration: none; /* Remove underlines */
+}
+
+.social-media a:hover {
+    color: #e7b3b3; /* Change color on hover */
+}

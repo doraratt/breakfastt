@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BreakFast | Plan</title>
+  <link rel="stylesheet" href="{% static 'css/plan.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/png" href="{% static 'images/bficon.png' %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}" class="logo">Break Fast</a></li>
+        <li><a href="{% url 'tracker' %}">Tracker</a></li>
+        <li><a href="{% url 'plan' %}" class="active-link">Plan</a></li>
+        <li><a href="{% url 'program' %}">Program</a></li>
+        <li><a href="{% url 'me' %}">Me</a></li>
+        <li><input type="text" placeholder="Search"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>CHOOSE YOUR FASTING PLAN!</h1>
+    <div class="plans-container">
+      <!-- Plan Cards -->
+      <div class="plan-card">
+        <h2>16 | 8</h2>
+        <span>16 Hours Fasting</span>
+        <span>8 Hours Eating Window</span>
+        <div class="rating">⭐ 4.9</div>
+        <form method="post" action="{% url 'tracker' %}">
+          {% csrf_token %}
+          <input type="hidden" name="fasting_hours" value="16">
+          <input type="hidden" name="eating_hours" value="8">
+          <input type="hidden" name="fasting_days" value="16">
+          <input type="hidden" name="eating_days" value="8">
+          <button class="select-btn">Select</button>
+        </form>
+      </div>
+
+      <div class="plan-card">
+        <h2>18 | 6</h2>
+        <span>18 Hours Fasting</span>
+        <span>6 Hours Eating Window</span>
+        <div class="rating">⭐ 4.7</div>
+        <form method="post" action="{% url 'tracker' %}">
+          {% csrf_token %}
+          <input type="hidden" name="fasting_hours" value="18">
+          <input type="hidden" name="eating_hours" value="6">
+          <input type="hidden" name="fasting_days" value="18">
+          <input type="hidden" name="eating_days" value="6">
+          <button class="select-btn">Select</button>
+        </form>
+      </div>
+
+      <div class="plan-card">
+        <h2>20 | 4</h2>
+        <span>20 Hours Fasting</span>
+        <span>4 Hours Eating Window</span>
+        <div class="rating">⭐ 4.1</div>
+        <form method="post" action="{% url 'tracker' %}">
+          {% csrf_token %}
+          <input type="hidden" name="fasting_hours" value="20">
+          <input type="hidden" name="eating_hours" value="4">
+          <input type="hidden" name="fasting_days" value="20">
+          <input type="hidden" name="eating_days" value="4">
+          <button class="select-btn">Select</button>
+        </form>
+      </div>
+
+      <div class="plan-card">
+        <h2>5 | 2</h2>
+        <span>5 Days Fasting</span>
+        <span>2 Days Eating Window</span>
+        <div class="rating">⭐ 3.2</div>
+        <form method="post" action="{% url 'tracker' %}">
+          {% csrf_token %}
+          <input type="hidden" name="fasting_days" value="5">
+          <input type="hidden" name="eating_days" value="2">
+          <button class="select-btn">Select</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Break Fast</p>
+  </footer>
+</body>
+</html>

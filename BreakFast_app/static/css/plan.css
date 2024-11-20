@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/waist.png');
+    background-size: contain;
+    background-position: 1000px center;
+    background-repeat: no-repeat;
+    background-color: #F3A9A8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    list-style-type: none;
+    padding: 0 20px; /* Add padding for spacing */
+}
+
+header nav ul li {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #964b4b;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #964b4b;
+    font-size: 1.2em;
+}
+
+header nav ul li:first-child {
+    margin-right: auto; /* Push "Break Fast" to the far left */
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8em;
+}
+
+header nav ul li input[type="text"] {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 2px solid #f7d3d3;
+}
+
+main {
+    flex: 1; /* Take up all available space between header and footer */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* Highlight the active Tracker link */
+.active-link {
+    background-color: #F3A9A8;  /* Highlight color */
+    color: white;  /* Change text color for contrast */
+    font-weight: bold;  /* Make the font bold */
+    padding: 10px 5px;  /* Add padding for a button-like effect */
+    border-radius: 5px;  /* Rounded corners for a smoother look */
+}
+
+header nav ul li a.active-link {
+    text-decoration: none; /* Remove underline */
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #d81b60;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Plans Container */
+.plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Increased min-width for larger cards */
+    gap: 30px; /* More space between the cards */
+    max-width: 1400px; /* Wider grid container */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Plan Cards */
+.plan-card {
+    background-color: #fff;
+    border-radius: 15px; /* Smoother, rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
+    padding: 30px; /* Increased padding for spacing */
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 250px; /* Increased height to accommodate content */
+}
+
+.plan-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Slightly more intense hover shadow */
+}
+
+.plan-card h2 {
+    font-size: 2.5em; /* Larger title */
+    color: #964b4b;
+    margin-bottom: 15px;
+}
+
+.plan-card span {
+    display: block;
+    font-size: 1.4em; /* Larger span font for better readability */
+    margin: 10px 0;
+    color: #333;
+}
+
+.rating {
+    font-size: 1.5em; /* Larger rating stars */
+    margin: 15px 0;
+    color: #ff9800;
+}
+
+.select-btn {
+    background-color: #d81b60;
+    color: #fff;
+    font-size: 1.2em; /* Bigger button text */
+    padding: 15px 30px; /* Larger button for better appearance */
+    border: none;
+    border-radius: 8px; /* Smoother rounded button edges */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.select-btn:hover {
+    background-color: #b0154a;
+}
+
+/* Plan Cards */
+.plan-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.plan-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card h2 {
+    font-size: 2em;
+    color: #964b4b;
+    margin-bottom: 10px;
+}
+
+.plan-card span {
+    display: block;
+    font-size: 1.2em;
+    margin: 5px 0;
+    color: #333;
+}
+
+.rating {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #ff9800;
+}
+
+.select-btn {
+    background-color: #F3A9A8;
+    color: #fff;
+    font-size: 1em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.select-btn:hover {
+    background-color: #b0154a;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #964b4b;
+    margin-top: 20px;
+    width: 100%;
+}
