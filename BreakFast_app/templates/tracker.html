@@ -1,0 +1,469 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}BreakFast | Tracker{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.65)), 
+                    url("{% static 'images/healthyfood.png' %}") no-repeat center center;
+        background-size: cover;
+        z-index: -1;
+    }
+
+    .timer {
+        font-size: 3.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .mood-icons {
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .mood-icons i {
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .mood-icons i:hover {
+        transform: scale(1.2);
+    }
+
+    .energy-icons {
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .energy-icons i {
+        margin: 0 0.25rem;
+        transition: all 0.3s ease;
+    }
+
+    .energy-icons i:hover {
+        transform: scale(1.2);
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h2 {
+        color: var(--dark-brown);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .card h2 i {
+        color: var(--dark-brown);
+        opacity: 0.9;
+    }
+
+    .sleep-inputs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .fasting-numbers {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #4A3434;
+    }
+    
+    .bg-light {
+        background-color: #f8f9fa;
+    }
+    
+    .bg-dark {
+        background-color: #343a40;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .input-group input {
+        width: 70px;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .input-group input:focus {
+        outline: none;
+        border-color: var(--primary-pink);
+    }
+
+    .input-group label {
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-background"></div>
+
+<div class="container">
+    <div class="row pt-5">
+        <!-- Timer Display -->
+        <div class="col-12 text-center mb-4 ">
+            <div style="position: relative; width: 200px; height: 200px; margin: 0 auto;">
+                <svg class="timer-progress" viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                    <circle cx="50" cy="50" r="45" 
+                        style="fill: none; stroke: #f3f3f3; stroke-width: 8;"/>
+                    <circle cx="50" cy="50" r="45" 
+                        style="fill: none; stroke: #d81b60; stroke-width: 8; stroke-linecap: round; stroke-dasharray: 283; stroke-dashoffset: {{ circle_offset|default:283 }};"/>
+                </svg>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                    <div class="timer">
+                        <span id="timer-hours">00</span>:<span id="timer-minutes">00</span>:<span id="timer-seconds">00</span>
+                    </div>
+                    <div class="text-muted">remaining</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fasting Controls -->
+        <div class="col-12 text-center mb-5">
+            {% if not active_fast %}
+                <form method="post" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="start">
+                    {% if active_plan %}
+                        <input type="hidden" name="plan_id" value="{{ active_plan.id }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-play me-2"></i>Start Fast
+                        </button>
+                    {% else %}
+                        <a href="{% url 'plan' %}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Set Up Fasting Plan
+                        </a>
+                    {% endif %}
+                </form>
+            {% else %}
+                <div class="btn-group">
+                    {% if active_fast.is_paused %}
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="resume">
+                            <button type="submit" class="btn btn-success me-2">
+                                <i class="fas fa-play me-2"></i>Resume
+                            </button>
+                        </form>
+                    {% else %}
+                        <form method="post" class="d-inline" id="stopFastForm">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="stop">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-stop me-2"></i>Stop
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <!-- Fasting Plan Summary -->
+        <div class="col-md-6">
+            <div class="card">
+                <h2><i class="far fa-calendar"></i> Fasting Plan</h2>
+                <p class="mb-2">Your current plan is:</p>
+                {% if active_plan %}
+                    {% if active_plan.plan_type == '5:2' %}
+                        <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+                            <div class="bg-light p-3 rounded">
+                                <span class="fasting-numbers">{{ active_plan.fasting_days }}</span>
+                                <div>Days<br>Fasting</div>
+                            </div>
+                            <span class="fasting-numbers">:</span>
+                            <div class="bg-dark text-white p-3 rounded">
+                                <span class="fasting-numbers">{{ active_plan.eating_days }}</span>
+                                <div>Days<br>Eating<br>Window</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+                            <div class="bg-light p-3 rounded">
+                                <span class="fasting-numbers">{{ active_plan.fasting_hours }}</span>
+                                <div>Hours<br>Fasting</div>
+                            </div>
+                            <span class="fasting-numbers">:</span>
+                            <div class="bg-dark text-white p-3 rounded">
+                                <span class="fasting-numbers">{{ active_plan.eating_hours }}</span>
+                                <div>Hours<br>Eating<br>Window</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <p>No fasting plan selected yet. Please choose one.</p>
+                {% endif %}
+                <div class="text-center">
+                    <a href="{% url 'plan' %}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Edit Plan
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fast Time Record -->
+        <div class="col-md-6">
+            <div class="card">
+                <h2><i class="far fa-clock"></i> Fast Time Record</h2>
+                <div class="text-center my-4">
+                    <h3>Time Until Next Meal</h3>
+                    {% if active_fast %}
+                        {% if active_fast.is_paused %}
+                            <span class="h3 text-warning">Paused</span>
+                        {% else %}
+                            <span class="h3 text-success" id="remaining-hours">{{ remaining_hours|floatformat:1 }}</span>
+                            <span class="text-muted ms-2">hours</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="h3 text-muted">--</span>
+                        <span class="text-muted ms-2">hours</span>
+                    {% endif %}
+                </div>
+                <p class="text-center">{% if active_fast %}Getting there...{% else %}Start a fast to begin tracking{% endif %}</p>
+            </div>
+        </div>
+
+        {% if active_fast %}
+        <!-- Mood Tracking -->
+        <div class="col-md-6">
+            <div class="card">
+                <h2><i class="fas fa-smile"></i> Mood</h2>
+                <div class="mood-icons text-center">
+                    <i class="far fa-angry" data-value="1" style="color: {% if mood == 1 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('mood', 1)"></i>
+                    <i class="far fa-frown" data-value="2" style="color: {% if mood == 2 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('mood', 2)"></i>
+                    <i class="far fa-meh" data-value="3" style="color: {% if mood == 3 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('mood', 3)"></i>
+                    <i class="far fa-smile" data-value="4" style="color: {% if mood == 4 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('mood', 4)"></i>
+                    <i class="far fa-laugh-beam" data-value="5" style="color: {% if mood == 5 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('mood', 5)"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Energy Level -->
+        <div class="col-md-6">
+            <div class="card">
+                <h2><i class="fas fa-battery-half"></i> Energy Level</h2>
+                <div class="energy-icons text-center">
+                    <i class="fas fa-battery-empty" data-value="1" style="color: {% if energy == 1 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('energy', 1)"></i>
+                    <i class="fas fa-battery-quarter" data-value="2" style="color: {% if energy == 2 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('energy', 2)"></i>
+                    <i class="fas fa-battery-half" data-value="3" style="color: {% if energy == 3 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('energy', 3)"></i>
+                    <i class="fas fa-battery-three-quarters" data-value="4" style="color: {% if energy == 4 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('energy', 4)"></i>
+                    <i class="fas fa-battery-full" data-value="5" style="color: {% if energy == 5 %}#4A3434{% else %}#999{% endif %}" onclick="updatePhysiologicalStat('energy', 5)"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sleep Cycle -->
+        <div class="col-md-6">
+            <div class="card">
+                <h2><i class="fas fa-moon"></i> Sleep Cycle</h2>
+                <div class="sleep-inputs">
+                    <div class="input-group">
+                        <input type="number" id="sleep_hours" min="0" max="23" value="{{ sleep_hours|default:0 }}" class="form-control">
+                        <label>hours</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="sleep_minutes" min="0" max="59" value="{{ sleep_minutes|default:0 }}" class="form-control">
+                        <label>minutes</label>
+                    </div>
+                </div>
+                <div id="sleep-feedback" class="text-success mt-2"></div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Weight Input Modal -->
+<div class="modal fade" id="weightModal" tabindex="-1" aria-labelledby="weightModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="weightModalLabel">Record Your Weight</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="weightForm">
+                    <div class="mb-3">
+                        <label for="weight" class="form-label">Current Weight (kg)</label>
+                        <input type="number" step="0.1" class="form-control" id="weight" name="weight" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveWeight">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function updatePhysiologicalStat(type, value) {
+        fetch('/update_physiological_stats/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: `type=${type}&value=${value}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Update UI to show selected state
+                if (type === 'mood') {
+                    document.querySelectorAll('.mood-icons i').forEach(icon => {
+                        icon.style.color = icon.dataset.value == value ? '#4A3434' : '#999';
+                    });
+                } else if (type === 'energy') {
+                    document.querySelectorAll('.energy-icons i').forEach(icon => {
+                        icon.style.color = icon.dataset.value == value ? '#4A3434' : '#999';
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function updateSleepTime() {
+        const hours = document.getElementById('sleep_hours').value;
+        const minutes = document.getElementById('sleep_minutes').value;
+        
+        fetch('/update_physiological_stats/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: `type=sleep&hours=${hours}&minutes=${minutes}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('sleep-feedback').textContent = 'Sleep time updated!';
+                setTimeout(() => {
+                    document.getElementById('sleep-feedback').textContent = '';
+                }, 3000);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Add event listeners for sleep inputs
+    document.addEventListener('DOMContentLoaded', function() {
+        const sleepHours = document.getElementById('sleep_hours');
+        const sleepMinutes = document.getElementById('sleep_minutes');
+        
+        if (sleepHours && sleepMinutes) {
+            sleepHours.addEventListener('change', updateSleepTime);
+            sleepMinutes.addEventListener('change', updateSleepTime);
+        }
+    });
+
+    function updateTimer(endTime) {
+        const end = new Date(endTime).getTime();
+        const now = new Date().getTime();
+        const distance = end - now;
+
+        if (distance < 0) {
+            document.getElementById('timer-hours').textContent = '00';
+            document.getElementById('timer-minutes').textContent = '00';
+            document.getElementById('timer-seconds').textContent = '00';
+            return;
+        }
+
+        const hours = Math.floor(distance / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('timer-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('timer-minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('timer-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    {% if active_fast and not active_fast.completed and not active_fast.is_paused %}
+        // Update timer every second
+        const endTime = new Date('{{ active_fast.end_time|date:"c" }}');
+        setInterval(() => updateTimer(endTime), 1000);
+        updateTimer(endTime);  // Initial update
+    {% endif %}
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const stopFastForm = document.getElementById('stopFastForm');
+        const weightModal = new bootstrap.Modal(document.getElementById('weightModal'));
+        const saveWeightBtn = document.getElementById('saveWeight');
+        const weightInput = document.getElementById('weight');
+
+        stopFastForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            weightModal.show();
+        });
+
+        saveWeightBtn.addEventListener('click', async function() {
+            if (!weightInput.value || isNaN(weightInput.value) || parseFloat(weightInput.value) <= 0) {
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+                formData.append('action', 'stop');
+                formData.append('weight', weightInput.value);
+
+                const response = await fetch(window.location.href, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    weightModal.hide();
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error stopping fast. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error stopping fast. Please try again.');
+            }
+        });
+    });
+</script>
+{% endblock %}

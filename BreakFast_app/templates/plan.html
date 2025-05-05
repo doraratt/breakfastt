@@ -1,0 +1,419 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}BreakFast | Plan{% endblock %}
+{% block extra_css %}
+<link rel="icon" type="image/png" href="{% static 'images/bficon.png' %}">
+<style>
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                    url("{% static 'images/waist.png' %}") no-repeat center center fixed;
+        background-size: cover;
+        z-index: -1;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .asteriskField {
+        display: none;
+    }
+
+    .page-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: var(--dark-brown);
+        text-align: center;
+        margin-bottom: 2rem;
+        text-transform: capitalize;
+        padding-top: 10rem;
+    }
+
+    .section-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: var(--dark-brown);
+        margin-bottom: 1.5rem;
+        text-transform: capitalize;
+    }
+
+    .plan-card {
+        background-color: rgba(229, 181, 181, 0.97) !important;
+        backdrop-filter: blur(8px) !important;
+        border: none !important;
+        border-radius: 25px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    .plan-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .plan-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--dark-brown);
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .plan-text {
+        color: var(--dark-brown);
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .plan-meta {
+        font-size: 0.9rem;
+        color: rgba(74, 52, 52, 0.8);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .plan-badge {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 50px;
+        background-color: #28a745;
+        color: white;
+        display: inline-block;
+        margin-bottom: 1rem;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .btn-custom {
+        background-color: var(--dark-brown);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-custom:hover {
+        background-color: #3a2727;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn-custom.active {
+        background-color: #28a745;
+        pointer-events: none;
+    }
+
+    .plan-icon {
+        color: var(--dark-brown);
+        margin-right: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .plan-rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        color: #ffc107;
+    }
+
+    .plan-rating i {
+        margin-right: 0.25rem;
+    }
+
+    .plan-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .alert-custom {
+        background-color: rgba(229, 181, 181, 0.2);
+        border: 1px solid rgba(229, 181, 181, 0.3);
+        color: var(--dark-brown);
+    }
+
+    .alert-custom i {
+        color: #F3A9A8;
+    }
+
+    .custom-plan-form {
+        background: rgba(229, 181, 181, 0.65);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 25px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-background"></div>
+<div class="container">
+    <h1 class="page-title pt-5 ">Choose Your Fasting Plan</h1>
+
+    <!-- Preset Plans -->
+    <section class="mb-5">
+        <h2 class="section-title">Preset Plans</h2>
+        <div class="row g-4">
+            <!-- 16:8 Plan -->
+            <div class="col-md-4">
+                <div class="plan-card">
+                    <h3 class="plan-title">16 | 8</h3>
+                    <p class="plan-text">16 Hours Fasting</p>
+                    <p class="plan-text">8 Hours Eating Window</p>
+                    <div class="plan-rating">
+                        <i class="fas fa-star"></i> 4.9
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="plan_type" value="16:8">
+                        <input type="hidden" name="fasting_hours" value="16">
+                        <input type="hidden" name="eating_hours" value="8">
+                        <input type="hidden" name="name" value="16:8 Intermittent Fasting">
+                        <input type="hidden" name="description" value="16 hours of fasting with an 8-hour eating window">
+                        <button class="btn btn-custom w-100 {% if active_plan and active_plan.plan_type == '16:8' %}active{% endif %}">
+                            {% if active_plan and active_plan.plan_type == '16:8' %}
+                                <i class="fas fa-check me-2"></i>Active
+                            {% else %}
+                                Select
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 18:6 Plan -->
+            <div class="col-md-4">
+                <div class="plan-card">
+                    <h3 class="plan-title">18 | 6</h3>
+                    <p class="plan-text">18 Hours Fasting</p>
+                    <p class="plan-text">6 Hours Eating Window</p>
+                    <div class="plan-rating">
+                        <i class="fas fa-star"></i> 4.7
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="plan_type" value="18:6">
+                        <input type="hidden" name="fasting_hours" value="18">
+                        <input type="hidden" name="eating_hours" value="6">
+                        <input type="hidden" name="name" value="18:6 Intermittent Fasting">
+                        <input type="hidden" name="description" value="18 hours of fasting with a 6-hour eating window">
+                        <button class="btn btn-custom w-100 {% if active_plan and active_plan.plan_type == '18:6' %}active{% endif %}">
+                            {% if active_plan and active_plan.plan_type == '18:6' %}
+                                <i class="fas fa-check me-2"></i>Active
+                            {% else %}
+                                Select
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 20:4 Plan -->
+            <div class="col-md-4">
+                <div class="plan-card">
+                    <h3 class="plan-title">20 | 4</h3>
+                    <p class="plan-text">20 Hours Fasting</p>
+                    <p class="plan-text">4 Hours Eating Window</p>
+                    <div class="plan-rating">
+                        <i class="fas fa-star"></i> 4.5
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="plan_type" value="20:4">
+                        <input type="hidden" name="fasting_hours" value="20">
+                        <input type="hidden" name="eating_hours" value="4">
+                        <input type="hidden" name="name" value="20:4 Intermittent Fasting">
+                        <input type="hidden" name="description" value="20 hours of fasting with a 4-hour eating window">
+                        <button class="btn btn-custom w-100 {% if active_plan and active_plan.plan_type == '20:4' %}active{% endif %}">
+                            {% if active_plan and active_plan.plan_type == '20:4' %}
+                                <i class="fas fa-check me-2"></i>Active
+                            {% else %}
+                                Select
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Plan -->
+    <section class="mb-5">
+        <h2 class="section-title">Custom Plan</h2>
+        <div class="custom-plan-form">
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+                
+                <!-- Name Field -->
+                <div class="col-12">
+                    <label class="form-label">Plan Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <div class="text-danger small">
+                        {{ form.name.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Plan Type Field -->
+                <div class="col-12">
+                    <label class="form-label">Plan Type</label>
+                    {{ form.plan_type }}
+                    {% if form.plan_type.errors %}
+                    <div class="text-danger small">
+                        {{ form.plan_type.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Hourly Plan Fields -->
+                <div class="col-md-6 hourly-fields">
+                    <label class="form-label">Fasting Hours</label>
+                    {{ form.fasting_hours }}
+                    {% if form.fasting_hours.errors %}
+                    <div class="text-danger small">
+                        {{ form.fasting_hours.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 hourly-fields">
+                    <label class="form-label">Eating Hours</label>
+                    {{ form.eating_hours }}
+                    {% if form.eating_hours.errors %}
+                    <div class="text-danger small">
+                        {{ form.eating_hours.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Daily Plan Fields -->
+                <div class="col-md-6 daily-fields" style="display: none;">
+                    <label class="form-label">Fasting Days</label>
+                    {{ form.fasting_days }}
+                    {% if form.fasting_days.errors %}
+                    <div class="text-danger small">
+                        {{ form.fasting_days.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 daily-fields" style="display: none;">
+                    <label class="form-label">Eating Days</label>
+                    {{ form.eating_days }}
+                    {% if form.eating_days.errors %}
+                    <div class="text-danger small">
+                        {{ form.eating_days.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Description Field -->
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <div class="text-danger small">
+                        {{ form.description.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Date Fields -->
+                <div class="col-md-6">
+                    <label class="form-label">Start Date</label>
+                    {{ form.start_date }}
+                    {% if form.start_date.errors %}
+                    <div class="text-danger small">
+                        {{ form.start_date.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">End Date</label>
+                    {{ form.end_date }}
+                    {% if form.end_date.errors %}
+                    <div class="text-danger small">
+                        {{ form.end_date.errors|join:", " }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Non-field Errors -->
+                {% if form.non_field_errors %}
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors|join:", " }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-custom w-100">Apply Custom Plan</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+    $(document).ready(function() {
+        function toggleFields() {
+            var planType = $('#plan_type').val();
+            if (planType === '5:2') {
+                $('.daily-fields').show();
+                $('.hourly-fields').hide();
+                $('#fasting_hours, #eating_hours').val('');
+            } else {
+                $('.daily-fields').hide();
+                $('.hourly-fields').show();
+                $('#fasting_days, #eating_days').val('');
+            }
+        }
+
+        $('#plan_type').on('change', toggleFields);
+        toggleFields(); // Run on page load
+    });
+    </script>
+</div>
+{% endblock %}
